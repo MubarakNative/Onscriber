@@ -1,5 +1,6 @@
 package com.mubarak.onscriber
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.DrawerState
@@ -43,6 +44,8 @@ fun OsbApp(
                 },
                 navigateToSettings = {
                     navActions.navigateToSettings
+                    Log.i("OnSettingsClick", "Settings clickdd")
+                  //  Toast.makeText(context, "SC", Toast.LENGTH_SHORT).show()
                 },
                 currentScreen = currentScreen,
                 closeDrawer = {
