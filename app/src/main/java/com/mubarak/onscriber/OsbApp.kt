@@ -21,7 +21,6 @@ import kotlinx.coroutines.launch
 fun OsbApp(
     widthSizeClass: WindowWidthSizeClass
 ) {
-    val context = LocalContext.current
 
     val navController = rememberNavController()
     val coroutineScope = rememberCoroutineScope()
@@ -34,16 +33,18 @@ fun OsbApp(
         rememberSizeAwareDrawerState(isExpanded) // allow swipe to open drawer based on size
 
     val backStackEntry by navController.currentBackStackEntryAsState()
-    val currentScreen = backStackEntry?.destination?.route ?: OsbNavigation.HOME_ROUTE
+    val currentScreen = backStackEntry?.destination?.route ?: OsbHome
 
     ModalNavigationDrawer(
         drawerContent = {
             OsbAppDrawer(
                 navigateToHome = {
-                    navActions.navigateToHome
+                    navController.navigate(OsbHome)
+                    Log.i("OnSettingsClick", "Home clickdd")
+
                 },
                 navigateToSettings = {
-                    navActions.navigateToSettings
+                   navController.navigate(OsbSettings)
                     Log.i("OnSettingsClick", "Settings clickdd")
                   //  Toast.makeText(context, "SC", Toast.LENGTH_SHORT).show()
                 },
@@ -60,10 +61,11 @@ fun OsbApp(
         Row {
             if (isExpanded) {
                 AppNavRail(currentScreen = currentScreen, navigateToHome = {
-                    navActions.navigateToHome
+                    //navActions.navigateToHome
+                    navController.navigate(OsbHome)
                 }, navigateToSettings = {
-                   Toast.makeText(context, "Setting clicked", Toast.LENGTH_SHORT).show()
-                    navActions.navigateToSettings
+                   // navActions.navigateToSettings
+                    navController.navigate(OsbSettings)
                 })
             } else {
                 OsbNavGraph(navController = navController) {

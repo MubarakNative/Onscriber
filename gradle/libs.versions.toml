@@ -3,6 +3,7 @@ agp = "8.5.0"
 daggerHiltVersion = "2.50"
 kotlin = "1.9.23"
 coreKtx = "1.13.1"
+serializationVersion = "1.6.3"
 junit = "4.13.2"
 kspVersion = "1.9.23-1.0.19"
 junitVersion = "1.1.5"
@@ -12,7 +13,7 @@ activityCompose = "1.9.0"
 composeBom = "2024.06.00"
 material3AdaptiveNavigationSuite = "1.3.0-beta03"
 datastorePreferences = "1.1.1"
-navigationComposeVersion = "2.7.7"
+navigationComposeVersion = "2.8.0-beta02"
 coroutineVersion = "1.8.1"
 kotlinxCoroutinesTest = "1.8.1"
 lifecycleViewmodelKtx = "2.8.2"
@@ -48,6 +49,7 @@ androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serializationVersion" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationComposeVersion" }
 
@@ -56,6 +58,7 @@ navigation-compose = { module = "androidx.navigation:navigation-compose", versio
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlinSymbolProcessing ={ id = "com.google.devtools.ksp",  version.ref = "kspVersion"}
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 daggerHilt = { id = "com.google.dagger.hilt.android", version.ref = "daggerHiltVersion"}
 
 
