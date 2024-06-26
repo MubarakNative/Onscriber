@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.kotlinSymbolProcessing)
     alias(libs.plugins.daggerHilt)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -64,6 +65,9 @@ dependencies {
 
     // Compose Navigation
     implementation(libs.navigation.compose)
+
+    // Kotlinx-Serialization
+    implementation(libs.kotlinx.serialization.json)
 
     // NavigationSuiteScaffold
     implementation(libs.androidx.material3.adaptive.navigation.suite)

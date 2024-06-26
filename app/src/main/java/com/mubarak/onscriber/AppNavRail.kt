@@ -15,7 +15,7 @@ import androidx.compose.ui.res.stringResource
 @Composable
 fun AppNavRail(
     modifier: Modifier = Modifier,
-    currentScreen: String,
+    currentScreen: Any,
     navigateToHome: () -> Unit,
     navigateToSettings: () -> Unit
 ) {
@@ -23,7 +23,7 @@ fun AppNavRail(
 
         Spacer(modifier = Modifier.weight(1f))
         NavigationRailItem(
-            selected = currentScreen == OsbNavigation.HOME_ROUTE,
+            selected = currentScreen == OsbHome,
             onClick = navigateToHome,
             icon = {
                 Icon(Icons.AutoMirrored.Filled.List, stringResource(id = R.string.notes))
@@ -34,7 +34,7 @@ fun AppNavRail(
         )
 
         NavigationRailItem(
-            selected = currentScreen == OsbNavigation.SETTINGS_ROUTE,
+            selected = currentScreen == OsbSettings,
             onClick = navigateToSettings,
             icon = {
                 Icon(Icons.Default.Settings, stringResource(id = R.string.settings))
