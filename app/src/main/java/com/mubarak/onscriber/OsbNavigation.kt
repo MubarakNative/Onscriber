@@ -2,22 +2,18 @@ package com.mubarak.onscriber
 
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
-import kotlinx.serialization.Serializable
+import com.mubarak.onscriber.OsbNavigation.HOME_ROUTE
+import com.mubarak.onscriber.OsbNavigation.SETTINGS_ROUTE
 
 object OsbNavigation {
     const val HOME_ROUTE = "home"
     const val SETTINGS_ROUTE = "settings"
 }
 
-@Serializable
-object OsbHome
-
-@Serializable
-object OsbSettings
 
 class OsbNavigationActions(navController: NavHostController) {
     val navigateToHome: () -> Unit = {
-        navController.navigate(OsbHome) {
+        navController.navigate(HOME_ROUTE) {
             popUpTo(navController.graph.findStartDestination().id) {
                 saveState = true
             }
@@ -26,7 +22,7 @@ class OsbNavigationActions(navController: NavHostController) {
         }
     }
     val navigateToSettings: () -> Unit = {
-        navController.navigate(OsbSettings) {
+        navController.navigate(SETTINGS_ROUTE) {
             popUpTo(navController.graph.findStartDestination().id) {
                 saveState = true
             }

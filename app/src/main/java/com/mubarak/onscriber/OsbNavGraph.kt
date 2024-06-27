@@ -17,16 +17,22 @@ fun OsbNavGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = OsbHome
+        startDestination = OsbNavigation.HOME_ROUTE
     ) {
-        composable<OsbHome>{
+        composable(
+            OsbNavigation.HOME_ROUTE
+        ){
             OsbHomeScreen {
                 onDrawerClicked()
             }
         }
 
-        composable<OsbSettings>{
-            OsbSettings()
+        composable(
+            OsbNavigation.SETTINGS_ROUTE
+        ){
+            OsbSettings{
+                onDrawerClicked()
+            }
         }
     }
 }

@@ -20,12 +20,13 @@ import androidx.compose.ui.res.stringResource
 import com.mubarak.onscriber.R
 
 @Composable
-fun OsbSettings(modifier: Modifier = Modifier) {
+fun OsbSettings(
+    modifier: Modifier = Modifier,
+    onMenuClick: () -> Unit
+) {
     Scaffold(
         topBar = {
-            OsbSettingsTopAppBar(onMenuClick = {
-
-            })
+            OsbSettingsTopAppBar(onMenuClick = onMenuClick)
         }
     ) {
         Box(modifier = Modifier
