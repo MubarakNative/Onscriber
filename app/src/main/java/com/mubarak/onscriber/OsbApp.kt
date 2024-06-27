@@ -1,7 +1,5 @@
 package com.mubarak.onscriber
 
-import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
@@ -9,12 +7,13 @@ import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.platform.LocalContext
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.window.core.layout.WindowWidthSizeClass
+import com.mubarak.onscriber.OsbNavigation.HOME_ROUTE
+import com.mubarak.onscriber.OsbNavigation.SETTINGS_ROUTE
 import kotlinx.coroutines.launch
 
 @Composable
@@ -25,28 +24,33 @@ fun OsbApp(
     val navController = rememberNavController()
     val coroutineScope = rememberCoroutineScope()
 
-    val navActions = remember(navController) {
-        OsbNavigationActions(navController)
-    }
-    val isExpanded = widthSizeClass == WindowWidthSizeClass.EXPANDED
+    val isExpanded = widthSizeClass == WindowWidthSizeClass.MEDIUM
     val sizeAwareDrawerState =
         rememberSizeAwareDrawerState(isExpanded) // allow swipe to open drawer based on size
 
     val backStackEntry by navController.currentBackStackEntryAsState()
-    val currentScreen = backStackEntry?.destination?.route ?: OsbHome
+    val currentScreen = backStackEntry?.destination?.route ?: HOME_ROUTE
 
     ModalNavigationDrawer(
         drawerContent = {
             OsbAppDrawer(
                 navigateToHome = {
-                    navController.navigate(OsbHome)
-                    Log.i("OnSettingsClick", "Home clickdd")
-
+                    navController.navigate(HOME_ROUTE) {
+                        popUpTo(navController.graph.findStartDestination().id) {
+                            saveState = true
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
                 },
                 navigateToSettings = {
-                   navController.navigate(OsbSettings)
-                    Log.i("OnSettingsClick", "Settings clickdd")
-                  //  Toast.makeText(context, "SC", Toast.LENGTH_SHORT).show()
+                    navController.navigate(SETTINGS_ROUTE) {
+                        popUpTo(navController.graph.findStartDestination().id) {
+                            saveState = true
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
                 },
                 currentScreen = currentScreen,
                 closeDrawer = {
@@ -60,20 +64,35 @@ fun OsbApp(
     ) { // Content
         Row {
             if (isExpanded) {
-                AppNavRail(currentScreen = currentScreen, navigateToHome = {
-                    //navActions.navigateToHome
-                    navController.navigate(OsbHome)
-                }, navigateToSettings = {
-                   // navActions.navigateToSettings
-                    navController.navigate(OsbSettings)
-                })
-            } else {
-                OsbNavGraph(navController = navController) {
-                    coroutineScope.launch {
-                        sizeAwareDrawerState.open()
+                AppNavRail(
+                    currentScreen = currentScreen,
+                    navigateToHome = {
+                        navController.navigate(HOME_ROUTE) {
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
+                    }, navigateToSettings = {
+                        navController.navigate(SETTINGS_ROUTE) {
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
+                    })
+            }
+            OsbNavGraph(navController = navController, onDrawerClicked = {
+                coroutineScope.launch {
+                    sizeAwareDrawerState.apply {
+                        if (isExpanded) {
+                            close()
+                        } else open()
                     }
                 }
-            }
+            })
         }
     }
 }

@@ -23,7 +23,7 @@ fun OsbAppDrawer(
     navigateToHome: () -> Unit,
     navigateToSettings: () -> Unit,
     closeDrawer: () -> Unit,
-    currentScreen: Any
+    currentScreen: String
 ) {
     ModalDrawerSheet(
         modifier = modifier
@@ -33,7 +33,7 @@ fun OsbAppDrawer(
             label = {
                 Text(text = stringResource(id = R.string.notes))
             },
-            selected = currentScreen == OsbHome,
+            selected = currentScreen == OsbNavigation.HOME_ROUTE,
             icon = {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.List,
@@ -48,7 +48,7 @@ fun OsbAppDrawer(
             label = {
                 Text(text = stringResource(id = R.string.settings))
             },
-            selected = currentScreen == OsbSettings,
+            selected = currentScreen == OsbNavigation.SETTINGS_ROUTE,
             icon = {
                 Icon(
                     imageVector = Icons.Default.Settings,
