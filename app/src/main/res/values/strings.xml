@@ -2,4 +2,7 @@
     <string name="app_name">Onscriber</string>
     <string name="notes">Notes</string>
     <string name="settings">Settings</string>
+    <string name="drawNote">Create drawing note</string>
+    <string name="speechNote">Create a speech note</string>
+    <string name="imageNote">Create a note with image</string>
 </resources>

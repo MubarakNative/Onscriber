@@ -24,7 +24,7 @@ fun OsbApp(
     val navController = rememberNavController()
     val coroutineScope = rememberCoroutineScope()
 
-    val isExpanded = widthSizeClass == WindowWidthSizeClass.MEDIUM
+    val isExpanded = widthSizeClass == WindowWidthSizeClass.EXPANDED
     val sizeAwareDrawerState =
         rememberSizeAwareDrawerState(isExpanded) // allow swipe to open drawer based on size
 
