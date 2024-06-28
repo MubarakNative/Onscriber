@@ -25,7 +25,7 @@ fun AppNavRail(
 
         Spacer(modifier = Modifier.weight(1f))
         NavigationRailItem(
-            selected = currentScreen == HOME_ROUTE,
+            selected = currentScreen == OsbDestination.HOME_DESTINATION,
             onClick = navigateToHome,
             icon = {
                 Icon(Icons.AutoMirrored.Filled.List, stringResource(id = R.string.notes))
@@ -37,7 +37,7 @@ fun AppNavRail(
         )
 
         NavigationRailItem(
-            selected = currentScreen == SETTINGS_ROUTE,
+            selected = currentScreen == OsbDestination.SETTINGS_DESTINATION,
             onClick = navigateToSettings,
             icon = {
                 Icon(Icons.Default.Settings, stringResource(id = R.string.settings))

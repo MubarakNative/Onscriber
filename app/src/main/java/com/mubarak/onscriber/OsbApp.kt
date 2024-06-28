@@ -7,6 +7,7 @@ import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -24,6 +25,10 @@ fun OsbApp(
     val navController = rememberNavController()
     val coroutineScope = rememberCoroutineScope()
 
+    val navActions = remember {
+        OsbNavActions(navController)
+    }
+
     val isExpanded = widthSizeClass == WindowWidthSizeClass.EXPANDED
     val sizeAwareDrawerState =
         rememberSizeAwareDrawerState(isExpanded) // allow swipe to open drawer based on size
@@ -35,6 +40,7 @@ fun OsbApp(
         drawerContent = {
             OsbAppDrawer(
                 navigateToHome = {
+                    //navActions.navigateToHome()
                     navController.navigate(HOME_ROUTE) {
                         popUpTo(navController.graph.findStartDestination().id) {
                             saveState = true
@@ -44,7 +50,8 @@ fun OsbApp(
                     }
                 },
                 navigateToSettings = {
-                    navController.navigate(SETTINGS_ROUTE) {
+                   // navActions.navigateToSettings()
+                    navController.navigate(OsbDestination.SETTINGS_DESTINATION) {
                         popUpTo(navController.graph.findStartDestination().id) {
                             saveState = true
                         }
@@ -67,7 +74,7 @@ fun OsbApp(
                 AppNavRail(
                     currentScreen = currentScreen,
                     navigateToHome = {
-                        navController.navigate(HOME_ROUTE) {
+                        navController.navigate(OsbDestination.HOME_DESTINATION) {
                             popUpTo(navController.graph.findStartDestination().id) {
                                 saveState = true
                             }
@@ -75,7 +82,7 @@ fun OsbApp(
                             restoreState = true
                         }
                     }, navigateToSettings = {
-                        navController.navigate(SETTINGS_ROUTE) {
+                        navController.navigate(OsbDestination.SETTINGS_DESTINATION) {
                             popUpTo(navController.graph.findStartDestination().id) {
                                 saveState = true
                             }
