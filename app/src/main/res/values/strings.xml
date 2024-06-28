@@ -5,4 +5,9 @@
     <string name="drawNote">Create drawing note</string>
     <string name="speechNote">Create a speech note</string>
     <string name="imageNote">Create a note with image</string>
+    <string name="content">Content</string>
+    <string name="save">Save</string>
+    <string name="nav_back">Navigate Up</string>
+    <string name="missing_field">Field\'s required!</string>
+    <string name="title">Title</string>
 </resources>

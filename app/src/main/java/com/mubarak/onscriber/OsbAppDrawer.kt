@@ -33,7 +33,7 @@ fun OsbAppDrawer(
             label = {
                 Text(text = stringResource(id = R.string.notes))
             },
-            selected = currentScreen == OsbNavigation.HOME_ROUTE,
+            selected = currentScreen == OsbDestination.HOME_DESTINATION,
             icon = {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.List,
@@ -48,7 +48,7 @@ fun OsbAppDrawer(
             label = {
                 Text(text = stringResource(id = R.string.settings))
             },
-            selected = currentScreen == OsbNavigation.SETTINGS_ROUTE,
+            selected = currentScreen == OsbDestination.SETTINGS_DESTINATION,
             icon = {
                 Icon(
                     imageVector = Icons.Default.Settings,

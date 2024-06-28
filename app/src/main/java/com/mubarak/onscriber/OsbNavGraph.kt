@@ -1,11 +1,13 @@
 package com.mubarak.onscriber
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.mubarak.onscriber.ui.addoredit.AddEditScreen
 import com.mubarak.onscriber.ui.settings.OsbSettings
 import com.mubarak.onscriber.ui.note.OsbHomeScreen
 
@@ -14,25 +16,36 @@ fun OsbNavGraph(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
     onDrawerClicked:() -> Unit,
+    navActions: OsbNavActions = remember {
+        OsbNavActions(navController)
+    }
 ) {
     NavHost(
         navController = navController,
-        startDestination = OsbNavigation.HOME_ROUTE
+        startDestination = OsbDestination.HOME_DESTINATION
     ) {
         composable(
-            OsbNavigation.HOME_ROUTE
+            OsbDestination.HOME_DESTINATION
         ){
-            OsbHomeScreen {
+            OsbHomeScreen(onFabClick = {
+                navActions.navigateToAddEdit(0,"Add Note")
+            }, onDrawerClick = onDrawerClicked)
+        }
+
+        composable(
+            OsbDestination.SETTINGS_DESTINATION
+        ){
+            OsbSettings{
                 onDrawerClicked()
             }
         }
 
         composable(
-            OsbNavigation.SETTINGS_ROUTE
+            OsbDestination.ADD_EDIT_DESTINATION
         ){
-            OsbSettings{
-                onDrawerClicked()
-            }
+            AddEditScreen(onUpButtonClick = {
+                navController.navigateUp()
+            })
         }
     }
 }
