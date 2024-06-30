@@ -7,6 +7,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mubarak.onscriber.R
+import com.mubarak.onscriber.data.sources.OsbRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -23,6 +24,7 @@ data class AddEditNoteUiState(
 
 @HiltViewModel
 class AddEditViewModel @Inject constructor (
+    private val osbRepository: OsbRepository,
     savedStateHandle: SavedStateHandle
 ) :ViewModel(){
 
@@ -40,7 +42,9 @@ class AddEditViewModel @Inject constructor (
 
     init {
         noteId?.let { id ->
-            populateNoteContent(id)
+            if (id != -1L){
+                populateNoteContent(id)
+            }
         }
     }
 
@@ -86,6 +90,13 @@ class AddEditViewModel @Inject constructor (
     }
 
     private fun populateNoteContent(noteId:Long){
-
+        viewModelScope.launch {
+            osbRepository.getNoteById(
+                noteId
+            ).let {
+                title = it.title
+                content = it.content
+            }
+        }
     }
 }
