@@ -1,5 +1,6 @@
 package com.mubarak.onscriber.ui.addoredit
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -20,6 +21,8 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,12 +31,14 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mubarak.onscriber.R
 import com.mubarak.onscriber.ui.theme.OnscriberTheme
 
 @Composable
 fun AddEditScreen(
     modifier: Modifier = Modifier,
+    @StringRes appBarTitle: Int,
     onUpButtonClick: () -> Unit = {},
     viewModel: AddEditViewModel = hiltViewModel()
 ) {
@@ -46,10 +51,12 @@ fun AddEditScreen(
         }, topBar = {
             AddEditTopAppBar(
                 onUpButtonClick = onUpButtonClick,
+                topAppBarTitle = appBarTitle
             )
         }, floatingActionButton = {
             SaveFab(onFabClick = viewModel::saveNote)
         }) {
+            val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
             DiaryNoteFields(
                 modifier = Modifier.padding(it),
@@ -58,6 +65,13 @@ fun AddEditScreen(
                 onTitleChange = viewModel::updateTitle,
                 onDescriptionChange = viewModel::updateContent
             )
+
+            uiState.message?.let { msg->
+                val message = stringResource(id = msg)
+                LaunchedEffect(message,viewModel,msg) {
+                    snackBarHostState.showSnackbar(message)
+                }
+            }
         }
     }
 }
@@ -90,7 +104,10 @@ fun DiaryNoteFields(
                 .fillMaxWidth()
                 .padding(16.dp),
             placeholder = {
-                Text(text = stringResource(id = R.string.title), style = TextStyle.Default.copy(fontSize = 24.sp))
+                Text(
+                    text = stringResource(id = R.string.title),
+                    style = TextStyle.Default.copy(fontSize = 24.sp)
+                )
             },
             textStyle = TextStyle.Default.copy(fontSize = 24.sp),
             colors = textFieldColour
@@ -105,7 +122,10 @@ fun DiaryNoteFields(
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp),
             placeholder = {
-                Text(text = stringResource(R.string.content), style = TextStyle.Default.copy(fontSize = 17.sp))
+                Text(
+                    text = stringResource(R.string.content),
+                    style = TextStyle.Default.copy(fontSize = 17.sp)
+                )
             },
             textStyle = TextStyle.Default.copy(fontSize = 17.sp),
             colors = textFieldColour
@@ -128,6 +148,7 @@ fun SaveFab(modifier: Modifier = Modifier, onFabClick: () -> Unit) {
 @Composable
 fun AddEditTopAppBar(
     modifier: Modifier = Modifier,
+    @StringRes topAppBarTitle: Int,
     onUpButtonClick: () -> Unit = {},
 ) {
     TopAppBar(title = {

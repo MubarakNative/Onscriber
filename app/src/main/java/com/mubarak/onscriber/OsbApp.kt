@@ -13,6 +13,8 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.window.core.layout.WindowWidthSizeClass
+import com.mubarak.onscriber.OsbDestination.HOME_DESTINATION
+import com.mubarak.onscriber.OsbDestination.SETTINGS_DESTINATION
 import com.mubarak.onscriber.OsbNavigation.HOME_ROUTE
 import com.mubarak.onscriber.OsbNavigation.SETTINGS_ROUTE
 import kotlinx.coroutines.launch
@@ -40,7 +42,6 @@ fun OsbApp(
         drawerContent = {
             OsbAppDrawer(
                 navigateToHome = {
-                    //navActions.navigateToHome()
                     navController.navigate(HOME_ROUTE) {
                         popUpTo(navController.graph.findStartDestination().id) {
                             saveState = true
@@ -50,8 +51,7 @@ fun OsbApp(
                     }
                 },
                 navigateToSettings = {
-                   // navActions.navigateToSettings()
-                    navController.navigate(OsbDestination.SETTINGS_DESTINATION) {
+                    navController.navigate(SETTINGS_DESTINATION) {
                         popUpTo(navController.graph.findStartDestination().id) {
                             saveState = true
                         }
@@ -74,7 +74,7 @@ fun OsbApp(
                 AppNavRail(
                     currentScreen = currentScreen,
                     navigateToHome = {
-                        navController.navigate(OsbDestination.HOME_DESTINATION) {
+                        navController.navigate(HOME_DESTINATION) {
                             popUpTo(navController.graph.findStartDestination().id) {
                                 saveState = true
                             }
@@ -82,7 +82,7 @@ fun OsbApp(
                             restoreState = true
                         }
                     }, navigateToSettings = {
-                        navController.navigate(OsbDestination.SETTINGS_DESTINATION) {
+                        navController.navigate(SETTINGS_DESTINATION) {
                             popUpTo(navController.graph.findStartDestination().id) {
                                 saveState = true
                             }

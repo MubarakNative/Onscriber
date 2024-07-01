@@ -1,5 +1,6 @@
 package com.mubarak.onscriber.data.sources.local.dao
 
+import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -8,6 +9,7 @@ import androidx.room.Upsert
 import com.mubarak.onscriber.data.sources.local.model.Note
 import kotlinx.coroutines.flow.Flow
 
+@Dao
 interface NoteDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

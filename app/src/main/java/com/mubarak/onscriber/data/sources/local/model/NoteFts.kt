@@ -16,6 +16,6 @@ data class NoteFts(
     @ColumnInfo("Title")
     val title:String,
 
-    @ColumnInfo("Description")
-    val description:String
+    @ColumnInfo("Content")
+    val content:String
 )
