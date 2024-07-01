@@ -20,9 +20,9 @@ data class HomeNoteUiState(
 class HomeNoteViewModel @Inject constructor(
     private val osbRepository: OsbRepository,
     savedStateHandle: SavedStateHandle
-):ViewModel() {
+) : ViewModel() {
 
-    private val message: Int? = savedStateHandle["message"]
+    private val message: Int = checkNotNull(savedStateHandle["message"])
 
     private val _uiState = MutableStateFlow(HomeNoteUiState())
     val uiState = _uiState.asStateFlow()
@@ -32,10 +32,8 @@ class HomeNoteViewModel @Inject constructor(
             osbRepository.getAllNote().collect {
                 _uiState.value = HomeNoteUiState(it)
             }
-            message?.let {
-                _uiState.update {
-                    it.copy(message = message)
-                }
+            _uiState.update {
+                it.copy(message = message)
             }
         }
     }

@@ -10,4 +10,5 @@
     <string name="nav_back">Navigate Up</string>
     <string name="missing_field">Field\'s required!</string>
     <string name="title">Title</string>
+    <string name="create_note">Create note</string>
 </resources>

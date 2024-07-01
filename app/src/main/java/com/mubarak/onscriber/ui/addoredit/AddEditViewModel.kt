@@ -1,11 +1,13 @@
 package com.mubarak.onscriber.ui.addoredit
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mubarak.onscriber.OsbDestinationsArgs.NOTE_ID_ARG
 import com.mubarak.onscriber.R
 import com.mubarak.onscriber.data.sources.OsbRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,13 +25,17 @@ data class AddEditNoteUiState(
 )
 
 @HiltViewModel
-class AddEditViewModel @Inject constructor (
+class AddEditViewModel @Inject constructor(
     private val osbRepository: OsbRepository,
     savedStateHandle: SavedStateHandle
-) :ViewModel(){
+) : ViewModel() {
 
 
-    private val noteId: Long? = savedStateHandle["noteId"]
+    private val noteId: Long = checkNotNull(savedStateHandle[NOTE_ID_ARG])
+
+    init {
+        Log.i("noteId", noteId.toString())
+    }
 
     private val _uiState = MutableStateFlow(AddEditNoteUiState())
     val uiState: StateFlow<AddEditNoteUiState> = _uiState.asStateFlow()
@@ -41,10 +47,8 @@ class AddEditViewModel @Inject constructor (
         private set
 
     init {
-        noteId?.let { id ->
-            if (id != -1L){
-                populateNoteContent(id)
-            }
+        if (noteId != -1L) {
+            populateNoteContent(noteId)
         }
     }
 
@@ -56,7 +60,7 @@ class AddEditViewModel @Inject constructor (
             return
         }
 
-        if (noteId == null) {
+        if (noteId == -1L) {
             createNote()
         } else {
             updateNote()
@@ -76,7 +80,7 @@ class AddEditViewModel @Inject constructor (
                 navigateToHome = true
             )
         }
-        noteId?.let {
+        noteId.let {
 
         }
     }
@@ -89,7 +93,7 @@ class AddEditViewModel @Inject constructor (
         this.content = description
     }
 
-    private fun populateNoteContent(noteId:Long){
+    private fun populateNoteContent(noteId: Long) {
         viewModelScope.launch {
             osbRepository.getNoteById(
                 noteId

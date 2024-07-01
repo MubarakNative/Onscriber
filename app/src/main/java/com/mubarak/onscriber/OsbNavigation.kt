@@ -29,12 +29,12 @@ object OsbDestination {
 
 class OsbNavActions(private val navController: NavHostController) {
 
-    fun navigateToHome(message: Int = 0) {
-        val navigatesFromDrawer = message == 0
+    fun navigateToHome(message: Long = 0) {
+        val navigatesFromDrawer = message == -1L
 
         navController.navigate(
             HOME_ROUTE.let {
-                if (message != 0) "$it?$MESSAGE_ARG={$MESSAGE_ARG}" else it
+                if (message != -1L) "$it?$MESSAGE_ARG={$MESSAGE_ARG}" else it
             }
         ) {
             popUpTo(navController.graph.findStartDestination().id) {
@@ -46,10 +46,10 @@ class OsbNavActions(private val navController: NavHostController) {
         }
     }
 
-    fun navigateToAddEdit(noteId: Long, title: String) {
+    fun navigateToAddEdit(noteId: Long, title: Int) {
         navController.navigate(
             "$ADD_EDIT_ROUTE/$title".let {
-                if (noteId != 0L) "$it?$NOTE_ID_ARG={$noteId}" else it
+                if (noteId != -1L) "$it?$NOTE_ID_ARG={$noteId}" else it
             }
 
         )

@@ -72,7 +72,7 @@ fun OsbHomeScreen(
                         containerColor = BottomAppBarDefaults.bottomAppBarFabColor,
                         elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation()
                     ) {
-                        Icon(Icons.Filled.Add, "Localized description")
+                        Icon(Icons.Filled.Add, stringResource(id = R.string.create_note))
                     }
                 },
                 containerColor = Color.Transparent
