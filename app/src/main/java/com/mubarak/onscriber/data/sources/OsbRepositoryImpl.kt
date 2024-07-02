@@ -15,7 +15,7 @@ class OsbRepositoryImpl @Inject constructor(
 ):OsbRepository {
 
     override suspend fun insertNote(title: String, content: String)= withContext(dispatcher) {
-        val id = UUID.randomUUID().toString().toLong()
+        val id = UUID.randomUUID().mostSignificantBits and Long.MAX_VALUE // generate Random Positive LONG value
         val note = Note(
             id = id,
             title = title,

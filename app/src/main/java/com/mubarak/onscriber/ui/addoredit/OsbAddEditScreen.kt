@@ -72,6 +72,12 @@ fun AddEditScreen(
                     snackBarHostState.showSnackbar(message)
                 }
             }
+
+            LaunchedEffect(uiState.navigateToHome) {
+                if (uiState.navigateToHome){
+                    onUpButtonClick()
+                }
+            }
         }
     }
 }
@@ -152,7 +158,7 @@ fun AddEditTopAppBar(
     onUpButtonClick: () -> Unit = {},
 ) {
     TopAppBar(title = {
-
+        stringResource(id = topAppBarTitle)
     }, modifier = modifier, navigationIcon = {
         IconButton(onClick = onUpButtonClick) {
             Icon(
