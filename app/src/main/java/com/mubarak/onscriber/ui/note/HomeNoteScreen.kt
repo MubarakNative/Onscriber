@@ -1,14 +1,14 @@
 package com.mubarak.onscriber.ui.note
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.outlined.Draw
@@ -18,7 +18,6 @@ import androidx.compose.material.icons.outlined.Mic
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.BottomAppBarDefaults
-import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
@@ -31,12 +30,14 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mubarak.onscriber.R
 import com.mubarak.onscriber.data.sources.local.model.Note
 import com.mubarak.onscriber.ui.theme.OnscriberTheme
@@ -46,6 +47,8 @@ fun OsbHomeScreen(
     modifier: Modifier = Modifier,
     onDrawerClick: () -> Unit,
     onFabClick: () -> Unit,
+    onItemClick: (Note) -> Unit = {},
+    viewModel: HomeNoteViewModel = hiltViewModel()
 ) {
     Scaffold(
         bottomBar = {
@@ -94,14 +97,33 @@ fun OsbHomeScreen(
             }, modifier = modifier)
         }
     ) {
-        Box(
-            modifier = Modifier
-                .padding(it)
-                .fillMaxSize(), contentAlignment = Alignment.Center
+
+        val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+        OsbNoteItemLists(
+            modifier = Modifier.padding(it),
+            notes = uiState.notes,
+            onItemClick = onItemClick
+        )
+    }
+}
+
+@Composable
+fun OsbNoteItemLists(
+    modifier: Modifier = Modifier,
+    notes: List<Note>,
+    onItemClick: (Note) -> Unit = {}
+) {
+    LazyColumn(
+        modifier = modifier,
+        contentPadding = PaddingValues(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        items(
+            notes
         ) {
-            Text("Home")
+            OsbNoteItem(note = it, onItemClick = onItemClick)
         }
-        // TODO: Place home screen content
     }
 }
 
@@ -139,7 +161,7 @@ fun OsbTopAppBar(
 }
 
 @Composable
-fun NoteItem(
+fun OsbNoteItem(
     modifier: Modifier = Modifier,
     note: Note,
     onItemClick: (Note) -> Unit = {}
@@ -151,7 +173,6 @@ fun NoteItem(
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface,
         ),
-        border = BorderStroke(1.dp, Color.Black),
         modifier = modifier
             .fillMaxWidth()
     ) {
@@ -176,6 +197,6 @@ fun NoteItem(
 @Composable
 private fun NoteItemPreview() {
     OnscriberTheme {
-        NoteItem(note = Note(1, "Title", "Content"))
+        OsbNoteItem(note = Note(1, "Title", "Content"))
     }
 }
