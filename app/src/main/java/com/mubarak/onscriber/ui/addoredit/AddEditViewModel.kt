@@ -55,7 +55,7 @@ class AddEditViewModel @Inject constructor(
     fun saveNote() {
         if (title.isBlank() && content.isBlank()) {
             _uiState.update {
-                it.copy(message = R.string.missing_field, navigateToHome = true)
+                it.copy(message = R.string.missing_field)
             }
             return
         }
@@ -72,6 +72,7 @@ class AddEditViewModel @Inject constructor(
         _uiState.update {
             it.copy(navigateToHome = true)
         }
+        osbRepository.insertNote(title, content)
     }
 
     private fun updateNote() = viewModelScope.launch {
@@ -80,9 +81,7 @@ class AddEditViewModel @Inject constructor(
                 navigateToHome = true
             )
         }
-        noteId.let {
-
-        }
+        osbRepository.upsertNote(noteId, title, content)
     }
 
     fun updateTitle(title: String) {
