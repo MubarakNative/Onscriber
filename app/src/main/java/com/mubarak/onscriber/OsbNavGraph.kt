@@ -36,6 +36,8 @@ fun OsbNavGraph(
         ) {
             OsbHomeScreen(onFabClick = {
                 navActions.navigateToAddEdit(-1L, R.string.create_note)
+            }, onItemClick = {
+                navActions.navigateToAddEdit(it.id, R.string.edit_note)
             }, onDrawerClick = onDrawerClicked)
         }
 

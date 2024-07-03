@@ -1,6 +1,5 @@
 package com.mubarak.onscriber.ui.addoredit
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -30,12 +29,7 @@ class AddEditViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-
     private val noteId: Long = checkNotNull(savedStateHandle[NOTE_ID_ARG])
-
-    init {
-        Log.i("noteId", noteId.toString())
-    }
 
     private val _uiState = MutableStateFlow(AddEditNoteUiState())
     val uiState: StateFlow<AddEditNoteUiState> = _uiState.asStateFlow()

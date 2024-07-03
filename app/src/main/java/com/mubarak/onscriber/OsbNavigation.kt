@@ -23,7 +23,7 @@ object OsbDestinationsArgs {
 
 object OsbDestination {
     const val HOME_DESTINATION = "$HOME_ROUTE?$MESSAGE_ARG={$MESSAGE_ARG}"
-    const val ADD_EDIT_DESTINATION = "${ADD_EDIT_ROUTE}/{$TITLE_ARG}?$NOTE_ID_ARG={$NOTE_ID_ARG}"
+    const val ADD_EDIT_DESTINATION = "$ADD_EDIT_ROUTE/{$TITLE_ARG}?$NOTE_ID_ARG={$NOTE_ID_ARG}"
     const val SETTINGS_DESTINATION = SETTINGS_ROUTE
 }
 
@@ -34,7 +34,7 @@ class OsbNavActions(private val navController: NavHostController) {
 
         navController.navigate(
             HOME_ROUTE.let {
-                if (message != -1L) "$it?$MESSAGE_ARG={$MESSAGE_ARG}" else it
+                if (message != -1L) "$it?$MESSAGE_ARG=$message" else it
             }
         ) {
             popUpTo(navController.graph.findStartDestination().id) {
@@ -49,7 +49,7 @@ class OsbNavActions(private val navController: NavHostController) {
     fun navigateToAddEdit(noteId: Long, title: Int) {
         navController.navigate(
             "$ADD_EDIT_ROUTE/$title".let {
-                if (noteId != -1L) "$it?$NOTE_ID_ARG={$noteId}" else it
+                if (noteId != -1L) "$it?$NOTE_ID_ARG=$noteId" else it
             }
 
         )
