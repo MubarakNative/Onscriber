@@ -12,4 +12,5 @@
     <string name="title">Title</string>
     <string name="create_note">Create note</string>
     <string name="edit_note">Edit note</string>
+    <string name="delete_note">Delete note</string>
 </resources>

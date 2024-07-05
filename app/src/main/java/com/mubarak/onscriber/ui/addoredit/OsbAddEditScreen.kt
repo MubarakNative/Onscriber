@@ -9,6 +9,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -51,7 +52,8 @@ fun AddEditScreen(
         }, topBar = {
             AddEditTopAppBar(
                 onUpButtonClick = onUpButtonClick,
-                topAppBarTitle = appBarTitle
+                topAppBarTitle = appBarTitle,
+                actionDelete = viewModel::deleteNote
             )
         }, floatingActionButton = {
             SaveFab(onFabClick = viewModel::saveNote)
@@ -66,15 +68,15 @@ fun AddEditScreen(
                 onDescriptionChange = viewModel::updateContent
             )
 
-            uiState.message?.let { msg->
+            uiState.message?.let { msg ->
                 val message = stringResource(id = msg)
-                LaunchedEffect(message,viewModel,msg) {
+                LaunchedEffect(message, viewModel, msg) {
                     snackBarHostState.showSnackbar(message)
                 }
             }
 
             LaunchedEffect(uiState.navigateToHome) {
-                if (uiState.navigateToHome){
+                if (uiState.navigateToHome) {
                     onUpButtonClick()
                 }
             }
@@ -156,6 +158,7 @@ fun AddEditTopAppBar(
     modifier: Modifier = Modifier,
     @StringRes topAppBarTitle: Int,
     onUpButtonClick: () -> Unit = {},
+    actionDelete: () -> Unit = {},
 ) {
     TopAppBar(title = {
         stringResource(id = topAppBarTitle)
@@ -164,6 +167,13 @@ fun AddEditTopAppBar(
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                 contentDescription = stringResource(id = R.string.nav_back)
+            )
+        }
+    }, actions = {
+        IconButton(onClick = actionDelete) {
+            Icon(
+                imageVector = Icons.Default.Delete,
+                contentDescription = stringResource(id = R.string.delete_note)
             )
         }
     })

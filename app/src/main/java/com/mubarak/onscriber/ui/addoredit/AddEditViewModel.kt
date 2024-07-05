@@ -31,6 +31,8 @@ class AddEditViewModel @Inject constructor(
 
     private val noteId: Long = checkNotNull(savedStateHandle[NOTE_ID_ARG])
 
+    private val isNewNote: Boolean = noteId == -1L
+
     private val _uiState = MutableStateFlow(AddEditNoteUiState())
     val uiState: StateFlow<AddEditNoteUiState> = _uiState.asStateFlow()
 
@@ -41,7 +43,7 @@ class AddEditViewModel @Inject constructor(
         private set
 
     init {
-        if (noteId != -1L) {
+        if (!isNewNote) {
             populateNoteContent(noteId)
         }
     }
@@ -76,6 +78,17 @@ class AddEditViewModel @Inject constructor(
             )
         }
         osbRepository.upsertNote(noteId, title, content)
+    }
+
+    fun deleteNote() = viewModelScope.launch {
+        if (!isNewNote){
+            osbRepository.deleteNoteById(noteId)
+            _uiState.update {
+                it.copy(
+                    navigateToHome = true
+                )
+            }
+        }
     }
 
     fun updateTitle(title: String) {
