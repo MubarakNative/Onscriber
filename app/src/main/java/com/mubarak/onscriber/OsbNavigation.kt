@@ -7,11 +7,13 @@ import com.mubarak.onscriber.OsbDestinationsArgs.NOTE_ID_ARG
 import com.mubarak.onscriber.OsbDestinationsArgs.TITLE_ARG
 import com.mubarak.onscriber.OsbNavigation.ADD_EDIT_ROUTE
 import com.mubarak.onscriber.OsbNavigation.HOME_ROUTE
+import com.mubarak.onscriber.OsbNavigation.SEARCH_ROUTE
 import com.mubarak.onscriber.OsbNavigation.SETTINGS_ROUTE
 
 object OsbNavigation {
     const val HOME_ROUTE = "home"
     const val SETTINGS_ROUTE = "settings"
+    const val SEARCH_ROUTE = "settings"
     const val ADD_EDIT_ROUTE = "addedit"
 }
 
@@ -25,6 +27,7 @@ object OsbDestination {
     const val HOME_DESTINATION = "$HOME_ROUTE?$MESSAGE_ARG={$MESSAGE_ARG}"
     const val ADD_EDIT_DESTINATION = "$ADD_EDIT_ROUTE/{$TITLE_ARG}?$NOTE_ID_ARG={$NOTE_ID_ARG}"
     const val SETTINGS_DESTINATION = SETTINGS_ROUTE
+    const val SEARCH_DESTINATION = SEARCH_ROUTE
 }
 
 class OsbNavActions(private val navController: NavHostController) {
@@ -53,6 +56,16 @@ class OsbNavActions(private val navController: NavHostController) {
             }
 
         )
+    }
+
+    fun navigateToSearch(){
+        navController.navigate(OsbDestination.SEARCH_DESTINATION) {
+            popUpTo(navController.graph.findStartDestination().id) {
+                saveState = true
+            }
+            launchSingleTop = true
+            restoreState = true
+        }
     }
 
     fun navigateToSettings(){
