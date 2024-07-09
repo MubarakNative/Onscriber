@@ -46,6 +46,7 @@ fun OsbHomeScreen(
     modifier: Modifier = Modifier,
     onDrawerClick: () -> Unit,
     onFabClick: () -> Unit,
+    onSearchActionClick: () -> Unit = {},
     onItemClick: (Note) -> Unit = {},
     viewModel: HomeNoteViewModel = hiltViewModel()
 ) {
@@ -93,7 +94,7 @@ fun OsbHomeScreen(
         topBar = {
             OsbTopAppBar(onMenuClick = {
                 onDrawerClick()
-            }, modifier = modifier)
+            }, searchActionClick = onSearchActionClick, modifier = modifier)
         }
     ) {
 
