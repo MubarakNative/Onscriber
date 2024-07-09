@@ -31,9 +31,10 @@ class SearchNoteViewModel @Inject constructor(
         private set
 
     fun searchNote(searchQuery: String) {
+        val queryFilter = SearchQueryFilter.filterQuery(searchQuery)
         this.searchQuery = searchQuery
         viewModelScope.launch {
-            osbRepository.getNoteBySearch(searchQuery).collect { notes ->
+            osbRepository.getNoteBySearch(queryFilter).collect { notes ->
                 _uiState.update {
                     it.copy(
                         notes = notes
