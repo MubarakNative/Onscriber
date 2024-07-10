@@ -13,7 +13,7 @@ import com.mubarak.onscriber.OsbNavigation.SETTINGS_ROUTE
 object OsbNavigation {
     const val HOME_ROUTE = "home"
     const val SETTINGS_ROUTE = "settings"
-    const val SEARCH_ROUTE = "settings"
+    const val SEARCH_ROUTE = "search"
     const val ADD_EDIT_ROUTE = "addedit"
 }
 

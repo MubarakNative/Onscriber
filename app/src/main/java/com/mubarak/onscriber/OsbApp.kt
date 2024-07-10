@@ -9,14 +9,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.window.core.layout.WindowWidthSizeClass
-import com.mubarak.onscriber.OsbDestination.HOME_DESTINATION
-import com.mubarak.onscriber.OsbDestination.SETTINGS_DESTINATION
 import com.mubarak.onscriber.OsbNavigation.HOME_ROUTE
-import com.mubarak.onscriber.OsbNavigation.SETTINGS_ROUTE
 import kotlinx.coroutines.launch
 
 @Composable
@@ -42,22 +39,10 @@ fun OsbApp(
         drawerContent = {
             OsbAppDrawer(
                 navigateToHome = {
-                    navController.navigate(HOME_ROUTE) {
-                        popUpTo(navController.graph.findStartDestination().id) {
-                            saveState = true
-                        }
-                        launchSingleTop = true
-                        restoreState = true
-                    }
+                    navActions.navigateToHome()
                 },
                 navigateToSettings = {
-                    navController.navigate(SETTINGS_DESTINATION) {
-                        popUpTo(navController.graph.findStartDestination().id) {
-                            saveState = true
-                        }
-                        launchSingleTop = true
-                        restoreState = true
-                    }
+                    navActions.navigateToSettings()
                 },
                 currentScreen = currentScreen,
                 closeDrawer = {
@@ -74,21 +59,9 @@ fun OsbApp(
                 AppNavRail(
                     currentScreen = currentScreen,
                     navigateToHome = {
-                        navController.navigate(HOME_DESTINATION) {
-                            popUpTo(navController.graph.findStartDestination().id) {
-                                saveState = true
-                            }
-                            launchSingleTop = true
-                            restoreState = true
-                        }
+                      navActions.navigateToHome()
                     }, navigateToSettings = {
-                        navController.navigate(SETTINGS_DESTINATION) {
-                            popUpTo(navController.graph.findStartDestination().id) {
-                                saveState = true
-                            }
-                            launchSingleTop = true
-                            restoreState = true
-                        }
+                       navActions.navigateToSettings()
                     })
             }
             OsbNavGraph(navController = navController, onDrawerClicked = {
