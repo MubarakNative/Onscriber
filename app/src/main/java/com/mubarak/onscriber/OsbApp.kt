@@ -35,7 +35,6 @@ fun OsbApp(
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentScreen = backStackEntry?.destination?.route ?: HOME_ROUTE
 
-    val context = LocalContext.current
     ModalNavigationDrawer(
         drawerContent = {
             OsbAppDrawer(
