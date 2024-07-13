@@ -161,7 +161,7 @@ fun AddEditTopAppBar(
     actionDelete: () -> Unit = {},
 ) {
     TopAppBar(title = {
-        stringResource(id = topAppBarTitle)
+        Text(text = stringResource(id = topAppBarTitle))
     }, modifier = modifier, navigationIcon = {
         IconButton(onClick = onUpButtonClick) {
             Icon(
