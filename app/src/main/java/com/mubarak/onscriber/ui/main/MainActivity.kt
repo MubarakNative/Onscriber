@@ -1,17 +1,11 @@
-package com.mubarak.onscriber
+package com.mubarak.onscriber.ui.main
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import com.mubarak.onscriber.OsbApp
 import com.mubarak.onscriber.ui.theme.OnscriberTheme
 import dagger.hilt.android.AndroidEntryPoint
 
