@@ -9,7 +9,7 @@ import kotlinx.coroutines.withContext
 import java.util.UUID
 import javax.inject.Inject
 
-class OsbRepositoryImpl @Inject constructor(
+class DefaultOsbRepository @Inject constructor(
     private val osbDatabase: OsbDatabase,
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ):OsbRepository {

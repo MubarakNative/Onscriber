@@ -3,7 +3,7 @@ package com.mubarak.onscriber.di
 import android.content.Context
 import androidx.room.Room
 import com.mubarak.onscriber.data.sources.OsbRepository
-import com.mubarak.onscriber.data.sources.OsbRepositoryImpl
+import com.mubarak.onscriber.data.sources.DefaultOsbRepository
 import com.mubarak.onscriber.data.sources.local.OsbDatabase
 import dagger.Module
 import dagger.Provides
@@ -31,6 +31,6 @@ object DatabaseModule {
     @Singleton
     @Provides
     fun getRepositoryImpl(noteDatabase: OsbDatabase): OsbRepository {
-        return OsbRepositoryImpl(noteDatabase)
+        return DefaultOsbRepository(noteDatabase)
     }
 }

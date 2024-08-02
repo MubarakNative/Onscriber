@@ -25,6 +25,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -59,6 +60,7 @@ fun AddEditScreen(
             SaveFab(onFabClick = viewModel::saveNote)
         }) {
             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+            val currentOnBackPress by rememberUpdatedState(onUpButtonClick)
 
             DiaryNoteFields(
                 modifier = Modifier.padding(it),
@@ -77,7 +79,7 @@ fun AddEditScreen(
 
             LaunchedEffect(uiState.navigateToHome) {
                 if (uiState.navigateToHome) {
-                    onUpButtonClick()
+                    currentOnBackPress()
                 }
             }
         }
