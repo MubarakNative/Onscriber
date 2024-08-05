@@ -1,14 +1,14 @@
-package com.mubarak.onscriber
+package com.mubarak.onscriber.ui
 
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
-import com.mubarak.onscriber.OsbDestinationsArgs.MESSAGE_ARG
-import com.mubarak.onscriber.OsbDestinationsArgs.NOTE_ID_ARG
-import com.mubarak.onscriber.OsbDestinationsArgs.TITLE_ARG
-import com.mubarak.onscriber.OsbNavigation.ADD_EDIT_ROUTE
-import com.mubarak.onscriber.OsbNavigation.HOME_ROUTE
-import com.mubarak.onscriber.OsbNavigation.SEARCH_ROUTE
-import com.mubarak.onscriber.OsbNavigation.SETTINGS_ROUTE
+import com.mubarak.onscriber.ui.OsbDestinationsArgs.MESSAGE_ARG
+import com.mubarak.onscriber.ui.OsbDestinationsArgs.NOTE_ID_ARG
+import com.mubarak.onscriber.ui.OsbDestinationsArgs.TITLE_ARG
+import com.mubarak.onscriber.ui.OsbNavigation.ADD_EDIT_ROUTE
+import com.mubarak.onscriber.ui.OsbNavigation.HOME_ROUTE
+import com.mubarak.onscriber.ui.OsbNavigation.SEARCH_ROUTE
+import com.mubarak.onscriber.ui.OsbNavigation.SETTINGS_ROUTE
 
 object OsbNavigation {
     const val HOME_ROUTE = "home"

@@ -1,4 +1,4 @@
-package com.mubarak.onscriber
+package com.mubarak.onscriber.ui
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.DrawerState
@@ -9,11 +9,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.window.core.layout.WindowWidthSizeClass
-import com.mubarak.onscriber.OsbNavigation.HOME_ROUTE
+import com.mubarak.onscriber.ui.OsbNavigation.HOME_ROUTE
+import com.mubarak.onscriber.ui.components.AppNavRail
 import kotlinx.coroutines.launch
 
 @Composable

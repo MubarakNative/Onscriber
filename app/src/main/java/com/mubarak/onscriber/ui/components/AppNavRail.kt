@@ -1,4 +1,4 @@
-package com.mubarak.onscriber
+package com.mubarak.onscriber.ui.components
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.material.icons.Icons
@@ -11,8 +11,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import com.mubarak.onscriber.OsbNavigation.HOME_ROUTE
-import com.mubarak.onscriber.OsbNavigation.SETTINGS_ROUTE
+import com.mubarak.onscriber.ui.OsbDestination
+import com.mubarak.onscriber.R
 
 @Composable
 fun AppNavRail(
