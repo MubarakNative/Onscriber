@@ -1,8 +1,7 @@
-package com.mubarak.onscriber
+package com.mubarak.onscriber.ui
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.Settings
@@ -16,8 +15,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.mubarak.onscriber.OsbDestination.HOME_DESTINATION
-import com.mubarak.onscriber.OsbDestination.SETTINGS_DESTINATION
+import com.mubarak.onscriber.R
+import com.mubarak.onscriber.ui.OsbDestination.HOME_DESTINATION
+import com.mubarak.onscriber.ui.OsbDestination.SETTINGS_DESTINATION
 import com.mubarak.onscriber.ui.theme.OnscriberTheme
 
 @Composable

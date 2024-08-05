@@ -6,7 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mubarak.onscriber.OsbDestinationsArgs.NOTE_ID_ARG
+import com.mubarak.onscriber.ui.OsbDestinationsArgs.NOTE_ID_ARG
 import com.mubarak.onscriber.R
 import com.mubarak.onscriber.data.sources.OsbRepository
 import dagger.hilt.android.lifecycle.HiltViewModel

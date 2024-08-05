@@ -1,4 +1,4 @@
-package com.mubarak.onscriber
+package com.mubarak.onscriber.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -9,11 +9,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.mubarak.onscriber.OsbDestination.HOME_DESTINATION
-import com.mubarak.onscriber.OsbDestination.SEARCH_DESTINATION
-import com.mubarak.onscriber.OsbDestination.SETTINGS_DESTINATION
-import com.mubarak.onscriber.OsbDestinationsArgs.NOTE_ID_ARG
-import com.mubarak.onscriber.OsbDestinationsArgs.TITLE_ARG
+import com.mubarak.onscriber.R
+import com.mubarak.onscriber.ui.OsbDestination.HOME_DESTINATION
+import com.mubarak.onscriber.ui.OsbDestination.SEARCH_DESTINATION
+import com.mubarak.onscriber.ui.OsbDestination.SETTINGS_DESTINATION
+import com.mubarak.onscriber.ui.OsbDestinationsArgs.NOTE_ID_ARG
+import com.mubarak.onscriber.ui.OsbDestinationsArgs.TITLE_ARG
 import com.mubarak.onscriber.ui.addoredit.AddEditScreen
 import com.mubarak.onscriber.ui.note.OsbHomeScreen
 import com.mubarak.onscriber.ui.search.OsbSearchScreen
