@@ -28,11 +28,15 @@ import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -42,6 +46,7 @@ import com.mubarak.onscriber.R
 import com.mubarak.onscriber.data.sources.local.model.Note
 import com.mubarak.onscriber.ui.theme.OnscriberTheme
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OsbHomeScreen(
     modifier: Modifier = Modifier,
@@ -51,7 +56,10 @@ fun OsbHomeScreen(
     onItemClick: (Note) -> Unit = {},
     viewModel: HomeNoteViewModel = hiltViewModel()
 ) {
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
+
     Scaffold(
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         bottomBar = {
             BottomAppBar(
                 actions = {
@@ -95,7 +103,7 @@ fun OsbHomeScreen(
         topBar = {
             OsbTopAppBar(onMenuClick = {
                 onDrawerClick()
-            }, searchActionClick = onSearchActionClick, modifier = modifier)
+            }, searchActionClick = onSearchActionClick, scrollBehavior = scrollBehavior, modifier = modifier)
         }
     ) {
 
@@ -131,8 +139,10 @@ fun OsbNoteItemLists(
 fun OsbTopAppBar(
     modifier: Modifier = Modifier,
     onMenuClick: () -> Unit,
+    scrollBehavior: TopAppBarScrollBehavior,
     searchActionClick: () -> Unit = {}
 ) {
+
     TopAppBar(
         title = {
             Text(
@@ -155,7 +165,8 @@ fun OsbTopAppBar(
                     contentDescription = null
                 )
             }
-        }
+        },
+        scrollBehavior = scrollBehavior
     )
 }
 
