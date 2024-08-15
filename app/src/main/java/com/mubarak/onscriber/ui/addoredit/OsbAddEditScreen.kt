@@ -12,6 +12,8 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
@@ -21,6 +23,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -28,6 +31,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
@@ -37,6 +41,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mubarak.onscriber.R
 import com.mubarak.onscriber.ui.theme.OnscriberTheme
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddEditScreen(
     modifier: Modifier = Modifier,
@@ -44,21 +49,29 @@ fun AddEditScreen(
     onUpButtonClick: () -> Unit = {},
     viewModel: AddEditViewModel = hiltViewModel()
 ) {
+
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
+
     val snackBarHostState = remember {
         SnackbarHostState()
     }
     OnscriberTheme {
-        Scaffold(modifier = modifier, snackbarHost = {
-            SnackbarHost(hostState = snackBarHostState)
-        }, topBar = {
-            AddEditTopAppBar(
-                onUpButtonClick = onUpButtonClick,
-                topAppBarTitle = appBarTitle,
-                actionDelete = viewModel::deleteNote
-            )
-        }, floatingActionButton = {
-            SaveFab(onFabClick = viewModel::saveNote)
-        }) {
+        Scaffold(
+            modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+            snackbarHost = {
+                SnackbarHost(hostState = snackBarHostState)
+            },
+            topBar = {
+                AddEditTopAppBar(
+                    onUpButtonClick = onUpButtonClick,
+                    scrollBehavior = scrollBehavior,
+                    topAppBarTitle = appBarTitle,
+                    actionDelete = viewModel::deleteNote
+                )
+            },
+            floatingActionButton = {
+                SaveFab(onFabClick = viewModel::saveNote)
+            }) {
             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
             val currentOnBackPress by rememberUpdatedState(onUpButtonClick)
 
@@ -158,6 +171,7 @@ fun SaveFab(modifier: Modifier = Modifier, onFabClick: () -> Unit) {
 @Composable
 fun AddEditTopAppBar(
     modifier: Modifier = Modifier,
+    scrollBehavior: TopAppBarScrollBehavior,
     @StringRes topAppBarTitle: Int,
     onUpButtonClick: () -> Unit = {},
     actionDelete: () -> Unit = {},
@@ -178,5 +192,5 @@ fun AddEditTopAppBar(
                 contentDescription = stringResource(id = R.string.delete_note)
             )
         }
-    })
+    }, scrollBehavior = scrollBehavior)
 }
