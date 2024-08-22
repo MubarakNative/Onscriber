@@ -1,6 +1,8 @@
 package com.mubarak.onscriber.ui.note
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -15,12 +17,12 @@ import androidx.compose.material.icons.outlined.Image
 import androidx.compose.material.icons.outlined.Menu
 import androidx.compose.material.icons.outlined.Mic
 import androidx.compose.material.icons.outlined.Search
+import androidx.compose.material3.Badge
+import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.BottomAppBarDefaults
-import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
@@ -30,17 +32,16 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.key
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -74,14 +75,26 @@ fun OsbHomeScreen(
                             contentDescription = stringResource(id = R.string.drawNote)
                         )
                     }
-                    IconButton(onClick = {
+
+                    IconButton(onClick = { /*TODO*/ }) {
+
+
+                        BadgedBox(badge = { Badge() }) {
+                            Icon(
+                                Icons.Outlined.Mic,
+                                contentDescription = stringResource(id = R.string.speechNote),
+                            )
+                        }
+                    }
+
+                  /*  IconButton(onClick = {
                         //TODO: navigate to Speech to text screen
                     }) {
                         Icon(
                             Icons.Outlined.Mic,
                             contentDescription = stringResource(id = R.string.speechNote),
                         )
-                    }
+                    }*/
                     IconButton(onClick = {
                         // TODO: navigate to image note screen
                     }) {
@@ -104,9 +117,14 @@ fun OsbHomeScreen(
             )
         },
         topBar = {
-            OsbTopAppBar(onMenuClick = {
-                onDrawerClick()
-            }, searchActionClick = onSearchActionClick, scrollBehavior = scrollBehavior, modifier = modifier)
+            OsbTopAppBar(
+                onMenuClick = {
+                    onDrawerClick()
+                },
+                searchActionClick = onSearchActionClick,
+                scrollBehavior = scrollBehavior,
+                modifier = modifier
+            )
         }
     ) {
 
@@ -120,6 +138,7 @@ fun OsbHomeScreen(
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun OsbNoteItemLists(
     modifier: Modifier = Modifier,
@@ -131,8 +150,10 @@ fun OsbNoteItemLists(
         contentPadding = PaddingValues(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        items(notes,key = {it.id}) {
-            OsbNoteItem(note = it, onItemClick = onItemClick)
+        items(notes, key = { it.id }) {
+            Box(modifier = Modifier.animateItemPlacement()){
+                OsbNoteItem(note = it, onItemClick = onItemClick)
+            }
         }
     }
 }
@@ -199,11 +220,15 @@ fun OsbNoteItem(
         ) {
             Text(
                 text = note.title,
+                maxLines = 3,
+                overflow = TextOverflow.Ellipsis,
                 style = MaterialTheme.typography.titleLarge,
             )
             Spacer(modifier = Modifier.padding(2.dp))
             Text(
                 text = note.content,
+                maxLines = 5,
+                overflow = TextOverflow.Ellipsis,
                 style = MaterialTheme.typography.titleSmall
             )
         }
