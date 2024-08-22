@@ -36,7 +36,7 @@ class AddEditViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(AddEditNoteUiState())
     val uiState: StateFlow<AddEditNoteUiState> = _uiState.asStateFlow()
 
-    var title by mutableStateOf("")
+    var title by mutableStateOf("") // UI element state also can be placed in a screen level state if that required business logic
         private set
 
     var content by mutableStateOf("")
