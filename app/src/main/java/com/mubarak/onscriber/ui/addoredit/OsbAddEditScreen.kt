@@ -72,6 +72,7 @@ fun AddEditScreen(
             floatingActionButton = {
                 SaveFab(onFabClick = viewModel::saveNote)
             }) {
+            
             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
             val currentOnBackPress by rememberUpdatedState(onUpButtonClick)
 
