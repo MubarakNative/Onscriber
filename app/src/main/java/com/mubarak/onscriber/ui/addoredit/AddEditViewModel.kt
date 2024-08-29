@@ -10,10 +10,6 @@ import com.mubarak.onscriber.ui.OsbDestinationsArgs.NOTE_ID_ARG
 import com.mubarak.onscriber.R
 import com.mubarak.onscriber.data.sources.OsbRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -33,8 +29,8 @@ class AddEditViewModel @Inject constructor(
 
     private val isNewNote: Boolean = noteId == -1L
 
-    private val _uiState = MutableStateFlow(AddEditNoteUiState())
-    val uiState: StateFlow<AddEditNoteUiState> = _uiState.asStateFlow()
+    var uiState by mutableStateOf(AddEditNoteUiState())
+        private set
 
     var title by mutableStateOf("") // UI element state also can be placed in a screen level state if that required business logic
         private set
@@ -50,9 +46,9 @@ class AddEditViewModel @Inject constructor(
 
     fun saveNote() {
         if (title.isBlank() && content.isBlank()) {
-            _uiState.update {
-                it.copy(message = R.string.missing_field)
-            }
+            uiState = uiState.copy(
+                message = R.string.missing_field
+            )
             return
         }
 
@@ -65,31 +61,27 @@ class AddEditViewModel @Inject constructor(
 
 
     private fun createNote() = viewModelScope.launch {
-        _uiState.update {
-            it.copy(navigateToHome = true)
-        }
+        uiState = uiState.copy(
+            navigateToHome = true
+        )
         osbRepository.insertNote(title, content)
     }
 
     private fun updateNote() = viewModelScope.launch {
-        _uiState.update {
-            it.copy(
-                navigateToHome = true
-            )
-        }
+        uiState = uiState.copy(
+            navigateToHome = true
+        )
         osbRepository.upsertNote(noteId, title, content)
     }
 
     fun deleteNote() = viewModelScope.launch {
         if (!isNewNote){
             osbRepository.deleteNoteById(noteId)
-            _uiState.update {
-                it.copy(
-                    navigateToHome = true
-                )
-            }
+            uiState = uiState.copy(
+                navigateToHome = true
+            )
         }
-    }
+    }ed
 
     fun updateTitle(title: String) {
         this.title = title

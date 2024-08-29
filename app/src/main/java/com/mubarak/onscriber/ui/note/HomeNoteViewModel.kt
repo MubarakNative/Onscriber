@@ -1,12 +1,13 @@
 package com.mubarak.onscriber.ui.note
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mubarak.onscriber.data.sources.OsbRepository
 import com.mubarak.onscriber.data.sources.local.model.Note
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,13 +22,13 @@ class HomeNoteViewModel @Inject constructor(
     private val osbRepository: OsbRepository
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(HomeNoteUiState())
-    val uiState = _uiState.asStateFlow()
+    var uiState by mutableStateOf(HomeNoteUiState())
+        private set
 
     init {
         viewModelScope.launch {
-            osbRepository.getAllNote().collect {
-                _uiState.value = HomeNoteUiState(it)
+            osbRepository.getAllNote().collect { notes ->
+                uiState = uiState.copy(notes = notes)
             }
         }
     }

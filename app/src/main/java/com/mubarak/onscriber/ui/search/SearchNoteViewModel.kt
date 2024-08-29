@@ -8,10 +8,6 @@ import androidx.lifecycle.viewModelScope
 import com.mubarak.onscriber.data.sources.OsbRepository
 import com.mubarak.onscriber.data.sources.local.model.Note
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -24,8 +20,8 @@ class SearchNoteViewModel @Inject constructor(
     private val osbRepository: OsbRepository
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(SearchNoteUiState())
-    val uiState: StateFlow<SearchNoteUiState> = _uiState.asStateFlow()
+    var uiState by mutableStateOf(SearchNoteUiState())
+        private set
 
     var searchQuery: String by mutableStateOf("")
         private set
@@ -35,11 +31,9 @@ class SearchNoteViewModel @Inject constructor(
         this.searchQuery = searchQuery
         viewModelScope.launch {
             osbRepository.getNoteBySearch(queryFilter).collect { notes ->
-                _uiState.update {
-                    it.copy(
-                        notes = notes
-                    )
-                }
+                uiState = uiState.copy(
+                    notes = notes
+                )
             }
         }
     }

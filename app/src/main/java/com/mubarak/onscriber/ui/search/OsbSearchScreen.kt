@@ -29,13 +29,13 @@ fun OsbSearchScreen(
     onUpButtonClick: () -> Unit = {},
     viewModel: SearchNoteViewModel = hiltViewModel()
 ) {
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+   // val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     OsbSearchScreen(
         modifier = modifier,
         onUpButtonClick = onUpButtonClick,
         searchQuery = viewModel.searchQuery,
-        notes = uiState.notes,
+        notes = viewModel.uiState.notes,
         queryChangeValue = {viewModel.searchNote(it)}
     )
 }

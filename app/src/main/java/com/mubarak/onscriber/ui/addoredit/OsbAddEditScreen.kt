@@ -73,7 +73,7 @@ fun AddEditScreen(
                 SaveFab(onFabClick = viewModel::saveNote)
             }) {
             
-            val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+            val uiState = viewModel.uiState
             val currentOnBackPress by rememberUpdatedState(onUpButtonClick)
 
             DiaryNoteFields(
