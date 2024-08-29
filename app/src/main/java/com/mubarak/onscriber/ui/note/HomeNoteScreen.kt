@@ -45,6 +45,7 @@ import androidx.compose.ui.tooling.preview.UiMode
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewModelScope
 import com.mubarak.onscriber.R
 import com.mubarak.onscriber.data.sources.local.model.Note
 import com.mubarak.onscriber.ui.theme.OnscriberTheme
@@ -59,12 +60,11 @@ fun OsbHomeScreen(
     onItemClick: (Note) -> Unit = {},
     viewModel: HomeNoteViewModel = hiltViewModel()
 ) {
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     OsbHomeScreen(
         modifier = modifier,
         onDrawerClick = onDrawerClick,
-        notes = uiState.notes,
+        notes = viewModel.uiState.notes,
         onFabClick = onFabClick,
         onSearchActionClick = onSearchActionClick,
         onItemClick = onItemClick
