@@ -1,20 +1,13 @@
 package com.mubarak.onscriber.ui
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
+import androidx.navigation.toRoute
 import com.mubarak.onscriber.R
-import com.mubarak.onscriber.ui.OsbDestination.HOME_DESTINATION
-import com.mubarak.onscriber.ui.OsbDestination.SEARCH_DESTINATION
-import com.mubarak.onscriber.ui.OsbDestination.SETTINGS_DESTINATION
-import com.mubarak.onscriber.ui.OsbDestinationsArgs.NOTE_ID_ARG
-import com.mubarak.onscriber.ui.OsbDestinationsArgs.TITLE_ARG
 import com.mubarak.onscriber.ui.addoredit.AddEditScreen
 import com.mubarak.onscriber.ui.note.OsbHomeScreen
 import com.mubarak.onscriber.ui.search.OsbSearchScreen
@@ -24,57 +17,38 @@ import com.mubarak.onscriber.ui.settings.OsbSettings
 fun OsbNavGraph(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
-    onDrawerClicked: () -> Unit,
-    navActions: OsbNavActions = remember {
-        OsbNavActions(navController)
-    }
+    onDrawerClicked: () -> Unit
 ) {
     NavHost(
         navController = navController,
-        startDestination = HOME_DESTINATION
+        startDestination = Home
     ) {
-        composable(
-            HOME_DESTINATION
-        ) {
+        composable<Home> {
             OsbHomeScreen(onFabClick = {
-                navActions.navigateToAddEdit(-1L, R.string.create_note)
+                navController.navigate(AddEdit(-1L, R.string.create_note))
             }, onItemClick = {
-                navActions.navigateToAddEdit(it.id, R.string.edit_note)
+                navController.navigate(AddEdit(it.id,R.string.edit_note))
             }, onSearchActionClick = {
-                navActions.navigateToSearch()
+                navController.navigate(Search)
             }, onDrawerClick = onDrawerClicked)
         }
 
-        composable(
-            SETTINGS_DESTINATION
-        ) {
+        composable<Settings> {
             OsbSettings {
                 onDrawerClicked()
             }
         }
 
-        composable(SEARCH_DESTINATION) {
+        composable<Search> {
             OsbSearchScreen(onUpButtonClick = { navController.navigateUp() })
         }
 
-        composable(
-            OsbDestination.ADD_EDIT_DESTINATION,
-            arguments = listOf(
-                navArgument(TITLE_ARG) {
-                    type = NavType.IntType
-                },
-                navArgument(NOTE_ID_ARG) {
-                    type = NavType.LongType
-                    defaultValue = -1L
-                }
-            )
-        ) { entry ->
-
-            val appBarTitle = entry.arguments?.getInt(TITLE_ARG)!!
+        composable<AddEdit> { entry ->
+            val addEdit: AddEdit = entry.toRoute()
 
             AddEditScreen(onUpButtonClick = {
                 navController.navigateUp()
-            }, appBarTitle = appBarTitle)
+            }, appBarTitle = addEdit.title)
         }
     }
 }

@@ -6,9 +6,10 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mubarak.onscriber.ui.OsbDestinationsArgs.NOTE_ID_ARG
+import androidx.navigation.toRoute
 import com.mubarak.onscriber.R
 import com.mubarak.onscriber.data.sources.OsbRepository
+import com.mubarak.onscriber.ui.AddEdit
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -25,9 +26,9 @@ class AddEditViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val noteId: Long = checkNotNull(savedStateHandle[NOTE_ID_ARG])
+    private val addEdit = savedStateHandle.toRoute<AddEdit>()
 
-    private val isNewNote: Boolean = noteId == -1L
+    private val isNewNote: Boolean = addEdit.noteId == -1L
 
     var uiState by mutableStateOf(AddEditNoteUiState())
         private set
@@ -40,7 +41,7 @@ class AddEditViewModel @Inject constructor(
 
     init {
         if (!isNewNote) {
-            populateNoteContent(noteId)
+            populateNoteContent(addEdit.noteId)
         }
     }
 
@@ -52,7 +53,7 @@ class AddEditViewModel @Inject constructor(
             return
         }
 
-        if (noteId == -1L) {
+        if (addEdit.noteId == -1L) {
             createNote()
         } else {
             updateNote()
@@ -71,17 +72,17 @@ class AddEditViewModel @Inject constructor(
         uiState = uiState.copy(
             navigateToHome = true
         )
-        osbRepository.upsertNote(noteId, title, content)
+        osbRepository.upsertNote(addEdit.noteId, title, content)
     }
 
     fun deleteNote() = viewModelScope.launch {
         if (!isNewNote){
-            osbRepository.deleteNoteById(noteId)
+            osbRepository.deleteNoteById(addEdit.noteId)
             uiState = uiState.copy(
                 navigateToHome = true
             )
         }
-    }ed
+    }
 
     fun updateTitle(title: String) {
         this.title = title

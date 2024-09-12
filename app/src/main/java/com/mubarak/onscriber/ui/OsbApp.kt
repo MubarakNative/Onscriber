@@ -7,12 +7,10 @@ import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.window.core.layout.WindowWidthSizeClass
-import com.mubarak.onscriber.ui.OsbNavigation.HOME_ROUTE
 import com.mubarak.onscriber.ui.components.AppNavRail
 import kotlinx.coroutines.launch
 
@@ -24,25 +22,22 @@ fun OsbApp(
     val navController = rememberNavController()
     val coroutineScope = rememberCoroutineScope()
 
-    val navActions = remember {
-        OsbNavActions(navController)
-    }
-
     val isExpanded = widthSizeClass == WindowWidthSizeClass.EXPANDED
     val sizeAwareDrawerState =
         rememberSizeAwareDrawerState(isExpanded) // allow swipe to open drawer based on size
 
     val backStackEntry by navController.currentBackStackEntryAsState()
-    val currentScreen = backStackEntry?.destination?.route ?: HOME_ROUTE
+    val currentScreen = backStackEntry?.destination?.route ?: Home::class.qualifiedName ?: "Home"
+
 
     ModalNavigationDrawer(
         drawerContent = {
             OsbAppDrawer(
                 navigateToHome = {
-                    navActions.navigateToHome()
+                    navController.navigate(Home)
                 },
                 navigateToSettings = {
-                    navActions.navigateToSettings()
+                    navController.navigate(Settings)
                 },
                 currentScreen = currentScreen,
                 closeDrawer = {
@@ -59,9 +54,9 @@ fun OsbApp(
                 AppNavRail(
                     currentScreen = currentScreen,
                     navigateToHome = {
-                      navActions.navigateToHome()
+                        navController.navigate(Home)
                     }, navigateToSettings = {
-                       navActions.navigateToSettings()
+                        navController.navigate(Settings)
                     })
             }
             OsbNavGraph(navController = navController, onDrawerClicked = {
