@@ -16,8 +16,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mubarak.onscriber.R
-import com.mubarak.onscriber.ui.OsbDestination.HOME_DESTINATION
-import com.mubarak.onscriber.ui.OsbDestination.SETTINGS_DESTINATION
 import com.mubarak.onscriber.ui.theme.OnscriberTheme
 
 @Composable
@@ -36,7 +34,7 @@ fun OsbAppDrawer(
             label = {
                 Text(text = stringResource(id = R.string.notes))
             },
-            selected = currentScreen == HOME_DESTINATION,
+            selected = currentScreen == Home::class.qualifiedName,
             icon = {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.List,
@@ -51,7 +49,7 @@ fun OsbAppDrawer(
             label = {
                 Text(text = stringResource(id = R.string.settings))
             },
-            selected = currentScreen == SETTINGS_DESTINATION,
+            selected = currentScreen == Settings::class.qualifiedName,
             icon = {
                 Icon(
                     imageVector = Icons.Default.Settings,

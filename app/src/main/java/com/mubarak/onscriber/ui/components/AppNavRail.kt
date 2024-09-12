@@ -11,8 +11,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import com.mubarak.onscriber.ui.OsbDestination
 import com.mubarak.onscriber.R
+import com.mubarak.onscriber.ui.Home
+import com.mubarak.onscriber.ui.Settings
 
 @Composable
 fun AppNavRail(
@@ -25,7 +26,7 @@ fun AppNavRail(
 
         Spacer(modifier = Modifier.weight(1f))
         NavigationRailItem(
-            selected = currentScreen == OsbDestination.HOME_DESTINATION,
+            selected = currentScreen == Home::class.qualifiedName,
             onClick = navigateToHome,
             icon = {
                 Icon(Icons.AutoMirrored.Filled.List, stringResource(id = R.string.notes))
@@ -37,7 +38,7 @@ fun AppNavRail(
         )
 
         NavigationRailItem(
-            selected = currentScreen == OsbDestination.SETTINGS_DESTINATION,
+            selected = currentScreen == Settings::class.qualifiedName,
             onClick = navigateToSettings,
             icon = {
                 Icon(Icons.Default.Settings, stringResource(id = R.string.settings))
