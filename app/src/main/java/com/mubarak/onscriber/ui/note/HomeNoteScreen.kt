@@ -19,6 +19,7 @@ import androidx.compose.material.icons.outlined.Mic
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.BottomAppBarDefaults
+import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -199,12 +200,10 @@ fun OsbTopAppBar(
 fun OsbNoteItem(
     modifier: Modifier = Modifier, note: Note, onItemClick: (Note) -> Unit = {}
 ) {
-    OutlinedCard(
+    Card(
         onClick = {
             onItemClick(note)
-        }, colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface,
-        ), modifier = modifier.fillMaxWidth()
+        }, modifier = modifier.fillMaxWidth()
     ) {
         Column(
             modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.Center
